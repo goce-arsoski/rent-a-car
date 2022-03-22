@@ -19,8 +19,10 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::resource('/cars', CarsController::class);
 //Cars
-Route::get('/cars', [CarsController::class, 'index']);
+// Route::get('/cars', [CarsController::class, 'index']);
+// Route::get('/cars/create', [CarsController::class, 'create']);
 
 //People
 Route::get('/people', [PeopleController::class, 'index']);
