@@ -20,6 +20,7 @@
           </br>
           {{ $car->color }}
         </p>
+
         <form action="/cars/{{ $car->id }}" method="POST">
           @csrf
           @method('delete')
@@ -27,6 +28,35 @@
             Delete
           </button>
         </form>
+        <p hidden>
+          <input
+            type="number"
+            class="block"
+            name="car_id"
+        </p>
+        <div>
+          <button class="btn btn-info">
+            <a href="{{ $car->id }}/bookings/create">
+              Book this car
+            </a>
+          </button>
+        </div>
+        <ul>
+          <p>
+            Bookings:
+          </p>
+
+          @forelse ($car->carBookings as $booking)
+            <li>
+              From: {{ $booking['start_date'] }} to {{ $booking['end_date'] }}.
+            </li>
+          @empty
+            <p>
+              No bookings yet.
+            </p>
+          @endforelse
+        </ul>
+
       </div>
     </form>
   </div>

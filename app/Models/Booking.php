@@ -13,6 +13,8 @@ class Booking extends Model
 
     protected $primaryKey = 'id';
 
+    protected $fillable = ['car_id', 'start_date', 'end_date'];
+
     // Booking model belongs to a car
     public function booking()
     {

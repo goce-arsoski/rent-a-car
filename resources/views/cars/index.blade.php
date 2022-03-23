@@ -15,10 +15,11 @@
     @foreach ($cars as $car)
       <div class="card">
         <div>
-          <button class="btn btn-warning"
+          <button class="btn btn-warning">
             <a href="cars/{{ $car->id }}/edit">
               Edit
             </a>
+          </button>
           <form action="/cars/{{ $car->id }}" method="POST">
             @csrf
             @method('delete')

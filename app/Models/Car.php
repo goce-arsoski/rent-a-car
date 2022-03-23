@@ -19,7 +19,7 @@ class Car extends Model
 
     protected $visible = ['brand', 'model', 'plate', 'color'];
 
-    public function bookings()
+    public function carBookings()
     {
         return $this->hasMany(Booking::class);
     }

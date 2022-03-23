@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Car;
@@ -67,5 +68,23 @@ class CarsController extends Controller
         $car->delete();
 
         return redirect('/cars');
+    }
+
+    public function cBooking()
+    {
+
+        return view('bookings.create');
+    }
+
+    public function sBooking(Request $request, $id)
+    {
+        dd(car_id);
+        $booking = Booking::create([
+            'car_id' => $id,
+            'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date')
+        ]);
+
+        return redirect('/cars/{$id}/bookings');
     }
 }
