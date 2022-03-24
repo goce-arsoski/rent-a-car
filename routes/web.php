@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarsController;
-use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\BookingsController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,17 +21,16 @@ Route::get('/', function () {
 });
 
 //Cars
-// Route::get('/cars', [CarsController::class, 'index']);
-// Route::get('/cars/create', [CarsController::class, 'create']);
 Route::resource('/cars', CarsController::class);
 
-//People
-Route::get('/people', [PeopleController::class, 'index']);
-
 //Bookings
-//Route::get('/bookings', [BookingsController::class, 'index']);
-//Route::resource('/bookings', BookingsController::class);
+Route::get('/bookings', [BookingsController::class, 'index']);
 
+//Bookings custom routes
 Route::get('/cars/{id}/bookings/', [BookingsController::class, 'allCarBookings']);
-Route::get('/cars/{id}/bookings/create', [CarsController::class, 'cBooking']);
-Route::post('/cars/{id}/bookings/', [CarsController::class, 'sBooking']);
+Route::get('/cars/{id}/bookings/create', [CarsController::class, 'cBooking'])->name('create.booking');
+Route::post('/cars/{id}/bookings/', [CarsController::class, 'sBooking'])->name('store.booking');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -8,10 +8,6 @@
   <div>
   <div class="text-center">
     <ul>
-      <p>
-        Bookings:
-      </p>
-
       @forelse ($bookings as $booking)
         <li>
           From: {{ $booking['start_date'] }} to {{ $booking['end_date'] }}.

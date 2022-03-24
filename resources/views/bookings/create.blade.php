@@ -8,16 +8,19 @@
   </div>
 
   <div class="text-center">
-    <form action="/cars/{{ car_id }}/bookings" method="POST">
+    <form action="{{ route('store.booking', $car->id) }}" method="POST">
       @csrf
-      <p hidden>
-        {{ Form::text('car_id', car_id) }}
-      </p>
       <div class="block">
         <input
-          type="date"
-          class="block"
-          name="start_date">
+          type="hidden"
+          name="car_id"
+          value="{{ $car->id}}">
+        </br>
+        <div class="block">
+          <input
+            type="date"
+            class="block"
+            name="start_date">
         </br>
           <input
           type="date"

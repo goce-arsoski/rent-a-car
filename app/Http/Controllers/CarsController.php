@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ValidationRequest;
 use App\Models\Booking;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Models\Car;
 
 class CarsController extends Controller
@@ -24,8 +24,10 @@ class CarsController extends Controller
         return view('cars.create');
     }
 
-    public function store(Request $request)
+    public function store(ValidationRequest $request)
     {
+        $request->validated();
+
         $car = Car::create([
             'brand' => $request->input('brand'),
             'model' => $request->input('model'),
@@ -50,8 +52,10 @@ class CarsController extends Controller
         return view('cars.edit')->with('car', $car);
     }
 
-    public function update(Request $request, $id)
+    public function update(ValidationRequest $request, $id)
     {
+        $request->validated();
+
         $car = Car::where('id', $id)
             ->update([
                 'brand' => $request->input('brand'),
@@ -70,21 +74,22 @@ class CarsController extends Controller
         return redirect('/cars');
     }
 
-    public function cBooking()
+    //Create booking with custom route
+    public function cBooking($id)
     {
-
-        return view('bookings.create');
+        $car = Car::findOrFail($id);
+        return view('bookings.create', compact('car'));
     }
 
-    public function sBooking(Request $request, $id)
+    //Save booking with custom route
+    public function sBooking(Request $request)
     {
-        dd(car_id);
         $booking = Booking::create([
-            'car_id' => $id,
-            'start_date' => $request->input('start_date'),
-            'end_date' => $request->input('end_date')
+            'car_id' => $request->car_id,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date
         ]);
 
-        return redirect('/cars/{$id}/bookings');
+        return redirect('/bookings');
     }
 }

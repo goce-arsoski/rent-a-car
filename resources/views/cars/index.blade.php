@@ -29,20 +29,20 @@
           </form>
         </div>
         <h2>
+        <a href="cars/{{ $car->id }}">
           Brand:
-          <a href="cars/{{ $car->id }}">
             {{ $car->brand  }}
-          </a>
-        </h2>
-        <h3>
-          Model: {{ $car->model }}
-        </h3>
-        <h3>
-          License plate: {{ $car->plate }}
-        </h3>
-        <h3>
-          Color: {{ $car->color }}
-        </h3>
+          </h2>
+          <h3>
+            Model: {{ $car->model }}
+          </h3>
+          <h3>
+            License plate: {{ $car->plate }}
+          </h3>
+          <h3>
+            Color: {{ $car->color }}
+          </h3>
+        </a>
       </div>
     @endforeach
   </div>

@@ -14,11 +14,6 @@
                     Bookings
                 </a>
             </button>
-            <button class="btn btn-info">
-                <a href="people">
-                    People
-                </a>
-            </button>
             <button class="btn btn-danger">
                 <a href="cars">
                     Cars

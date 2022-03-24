@@ -12,8 +12,6 @@
       @method('PUT')
       <div class="block">
         <p>
-          {{ $car->brand }}
-          </br>
           {{ $car->model }}
           </br>
           {{ $car->plate }}
@@ -28,12 +26,10 @@
             Delete
           </button>
         </form>
-        <p hidden>
-          <input
-            type="number"
-            class="block"
-            name="car_id"
-        </p>
+        <input
+          type="hidden"
+          name="car_id"
+          value="{{ $car->id}}">
         <div>
           <button class="btn btn-info">
             <a href="{{ $car->id }}/bookings/create">
