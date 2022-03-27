@@ -16,7 +16,7 @@
       <div class="card">
         <div>
           <button class="btn btn-warning">
-            <a href="cars/{{ $car->id }}/edit">
+            <a href="/cars/{{ $car->id }}/edit">
               Edit
             </a>
           </button>

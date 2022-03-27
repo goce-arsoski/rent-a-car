@@ -4,7 +4,7 @@
     <a class="navbar-brand"></a><a class="btn btn-secondary" href="/">Home</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
-        <a class="btn" href="/cars/">Book Car</a>
+        <a class="btn" href={{ route('index.cars') }}>Book Car</a>
         <a class="btn" href="/cars/create">Add Car</a>
         <a class="btn" href="/login/">Login</a>
         <a class="btn" href="/register/">Register</a>

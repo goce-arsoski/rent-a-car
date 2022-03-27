@@ -32,7 +32,7 @@
           value="{{ $car->id}}">
         <div>
           <button class="btn btn-info">
-            <a href="{{ $car->id }}/bookings/create">
+            <a href="{{ route('create.booking', $car->id) }}">
               Book this car
             </a>
           </button>

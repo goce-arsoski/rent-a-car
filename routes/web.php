@@ -22,14 +22,15 @@ Route::get('/', function () {
 
 //Cars
 Route::resource('/cars', CarsController::class);
+Route::get('/cars', [CarsController::class, 'index'])->name('index.cars');
 
 //Bookings
 Route::get('/bookings', [BookingsController::class, 'index']);
 
 //Bookings custom routes
-Route::get('/cars/{id}/bookings/', [BookingsController::class, 'allCarBookings']);
+Route::get('/cars/{id}/bookings', [BookingsController::class, 'allCarBookings'])->name('show.bookings');
 Route::get('/cars/{id}/bookings/create', [CarsController::class, 'cBooking'])->name('create.booking');
-Route::post('/cars/{id}/bookings/', [CarsController::class, 'sBooking'])->name('store.booking');
+Route::post('/cars/{id}/bookings', [CarsController::class, 'sBooking'])->name('store.booking');
 
 Auth::routes();
 

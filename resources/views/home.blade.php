@@ -10,12 +10,12 @@
         </div>
         <div class="align-middle">
             <button class="btn btn-warning">
-                <a href="bookings">
+                <a href="/bookings">
                     Bookings
                 </a>
             </button>
             <button class="btn btn-danger">
-                <a href="cars">
+                <a href={{ route('index.cars') }}>
                     Cars
                 </a>
             </button>
