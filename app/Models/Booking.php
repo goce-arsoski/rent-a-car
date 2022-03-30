@@ -13,11 +13,16 @@ class Booking extends Model
 
     protected $primaryKey = 'id';
 
-    protected $fillable = ['car_id', 'start_date', 'end_date'];
+    protected $fillable = ['car_id', 'user_id', 'start_date', 'end_date'];
 
     // Booking model belongs to a car
-    public function booking()
+    public function car()
     {
         return $this->belongsTo(Car::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

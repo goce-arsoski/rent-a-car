@@ -13,7 +13,7 @@ class Car extends Model
 
     protected $primaryKey = 'id';
 
-    protected $fillable = ['brand', 'model', 'plate', 'color'];
+    protected $fillable = ['user_id', 'brand', 'model', 'plate', 'color'];
 
     protected $hidden = ['updated_at'];
 
@@ -22,5 +22,11 @@ class Car extends Model
     public function carBookings()
     {
         return $this->hasMany(Booking::class);
+    }
+
+    //Get all cars for the User
+    public function bookings()
+    {
+        return $this->hasManyThrough(Booking::class, User::class);
     }
 }

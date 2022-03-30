@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'car_id',
     ];
 
     /**
@@ -41,4 +42,22 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function userBookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
+
+    //Get all cars for the User
+    public function bookings()
+    {
+        return $this->hasManyThrough(
+            Booking::class,
+            Car::class,
+            'user_id', //Foreign key on the Cars table
+            'car_id', //Foreign key on the Bookings table
+            'id', //Local key on the Users table
+            'id' //Local key on the Cars table
+        );
+    }
 }

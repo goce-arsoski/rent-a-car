@@ -20,17 +20,27 @@ Route::get('/', function () {
     return view('home');
 });
 
-//Cars
-Route::resource('/cars', CarsController::class);
-Route::get('/cars', [CarsController::class, 'index'])->name('index.cars');
+Route::middleware(['auth'])->group(function () {
+    //Cars
+    Route::resource('/cars', CarsController::class);
+    Route::get('/cars', [CarsController::class, 'index'])->name('index.cars');
 
-//Bookings
-Route::get('/bookings', [BookingsController::class, 'index']);
+    //Bookings
+    Route::get('/bookings', [BookingsController::class, 'index']);
 
-//Bookings custom routes
-Route::get('/cars/{id}/bookings', [BookingsController::class, 'allCarBookings'])->name('show.bookings');
-Route::get('/cars/{id}/bookings/create', [CarsController::class, 'cBooking'])->name('create.booking');
-Route::post('/cars/{id}/bookings', [CarsController::class, 'sBooking'])->name('store.booking');
+    //Bookings custom routes
+    Route::get('/cars/{car_id}/bookings', [BookingsController::class, 'allCarBookings'])->name('show.bookings');
+
+    //Route::get('/cars/{id}/bookings/create', [CarsController::class, 'cBooking'])->name('create.booking');
+    //Route::post('/cars/{id}/bookings', [CarsController::class, 'sBooking'])->name('store.booking');
+    Route::controller(BookingsController::class)->group(function () {
+        Route::get('/cars/{id}/bookings/create', 'cBooking')->name('create.booking');
+        Route::post('/cars/{id}/bookings', 'sBooking')->name('store.booking');
+    });
+
+    //Users
+    Route::get('/users', [CarsController::class, 'userCars'])->name('user.cars');
+});
 
 Auth::routes();
 

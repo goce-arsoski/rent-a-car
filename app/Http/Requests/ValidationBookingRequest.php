@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ValidationRequest extends FormRequest
+class ValidationBookingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,8 @@ class ValidationRequest extends FormRequest
     public function rules()
     {
         return [
-            'brand' => 'required',
-            'model' => 'required',
-            'plate' => 'required|unique:cars',
-            'color' => 'required'
+            'start_date' => 'required|date|after_or_equal:now',
+            'end_date' => 'required|date|after:start_date'
         ];
     }
 }

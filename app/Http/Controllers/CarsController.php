@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ValidationRequest;
-use App\Models\Booking;
-use Illuminate\Http\Request;
+use App\Http\Requests\ValidationCarRequest;
 use App\Models\Car;
+use App\Models\User;
 
 class CarsController extends Controller
 {
@@ -24,7 +23,7 @@ class CarsController extends Controller
         return view('cars.create');
     }
 
-    public function store(ValidationRequest $request)
+    public function store(ValidationCarRequest $request)
     {
         $request->validated();
 
@@ -52,7 +51,7 @@ class CarsController extends Controller
         return view('cars.edit')->with('car', $car);
     }
 
-    public function update(ValidationRequest $request, $id)
+    public function update(ValidationCarRequest $request, $id)
     {
         $request->validated();
 
@@ -74,22 +73,12 @@ class CarsController extends Controller
         return redirect('/cars');
     }
 
-    //Create booking with custom route
-    public function cBooking($id)
+    public function userCars()
     {
-        $car = Car::findOrFail($id);
-        return view('bookings.create', compact('car'));
-    }
+        $users = User::all();
 
-    //Save booking with custom route
-    public function sBooking(Request $request)
-    {
-        $booking = Booking::create([
-            'car_id' => $request->car_id,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date
+        return view('users.index', [
+            'users' => $users
         ]);
-
-        return redirect('/bookings');
     }
 }
