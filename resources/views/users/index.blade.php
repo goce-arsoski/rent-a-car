@@ -1,7 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<main class="sm:container sm:mx-auto sm:mt-10">
+<style>
+  .container-bg {
+    background: #ff8080;
+    opacity: 0.8;
+}
+</style>
+<main class="container-bg col-6 offset-3">
   <div class="container p-5">
     <ul>
       <p>
@@ -14,7 +20,7 @@
         </li>
       @endforeach
     </ul>
-
+    </br>
     <ul>
       <p>
         <h3> Booked Cars: </h3>

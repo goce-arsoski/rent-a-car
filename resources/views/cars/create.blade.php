@@ -8,34 +8,40 @@
   </div>
 
   <div class="text-center">
-    <form action="/cars" method="POST">
+    <form action="/cars" method="POST" enctype="multipart/form-data">
       @csrf
-      <div class="block">
+      <div class="block row text-center col-2 offset-5">
         <input
           type="text"
-          class="block"
+          class="form-control block mb-2"
           name="brand"
           placeholder="Brand name   - e.g. BMW/ Audi">
         </br>
-          <input
+        <input
           type="text"
-          class="block"
+          class="form-control block mb-2"
           name="model"
           placeholder="Model   - e.g. 325i/ A4">
         </br>
-          <input
+        <input
           type="text"
-          class="block"
+          class="form-control block mb-2"
           name="plate"
           placeholder="Plate   - e.g. SK-1111-AA">
         </br>
-          <input
+        <input
           type="text"
-          class="block"
+          class="form-control block mb-2"
           name="color"
           placeholder="Color   - e.g. Green/ Blue">
         </br>
-        <button type="submit" class="block">
+        <input
+          type="file"
+          class="form-control block mb-2"
+          name="image">
+        </br>
+        </br>
+        <button type="submit" class="btn btn-primary block">
           Create car
         </button>
       </div>

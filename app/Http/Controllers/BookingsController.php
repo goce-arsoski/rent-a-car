@@ -6,6 +6,7 @@ use App\Http\Requests\ValidationBookingRequest;
 use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Models\Car;
+use App\Services\BookingService;
 
 class BookingsController extends Controller
 {
@@ -48,13 +49,17 @@ class BookingsController extends Controller
     {
         $booking = Booking::find($id);
 
-        return view('booking.edit')->with('booking', $booking);
+        return view('bookings.edit')->with('booking', $booking);
     }
 
-    public function update(Request $request, $id)
+    public function update(ValidationBookingRequest $request)
     {
-        $booking = Booking::where('id', $id)
+        $request->validated();
+
+        $booking = Booking::where('id', $request->booking_id)
             ->update([
+                'car_id' => $request->car_id,
+                'user_id' => auth()->user()->id,
                 'start_date' => $request->input('start_date'),
                 'end_date' => $request->input('end_date')
             ]);
@@ -77,23 +82,34 @@ class BookingsController extends Controller
     }
 
     //Save booking with custom route
-    public function sBooking(ValidationBookingRequest $request)
+    public function sBooking(ValidationBookingRequest $request, BookingService $bookingService)
     {
-        $booking = Booking::create([
-            'car_id' => $request->car_id,
-            'user_id' => auth()->user()->id,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date
-        ]);
+        $request->validated();
+
+        if ($bookingService->isCarBooked($request->all()) == false) {
+            $booking = Booking::create([
+                'car_id' => $request->car_id,
+                'user_id' => auth()->user()->id,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date
+            ]);
+        } else return redirect()->back()->withErrors(['msg' => 'Please insert free dates.']);
 
         return redirect('/bookings');
     }
 
-    public function allCarBookings($car_id, $booking_id)
+    public function allCarBookings($car_id)
     {
         $car = Car::find($car_id);
         // $bookings = Booking::find($car_id, $booking_id);
         $bookings = $car->carBookings;
-        return view('bookings.show')->with(['car' => $car, 'bookings' => $bookings]);
+        return view('bookings.showCarBookings')->with(['car' => $car, 'bookings' => $bookings]);
+    }
+
+    public function showOneBooking($id)
+    {
+        // dd($id);
+        $booking = Booking::find($id);
+        return view('bookings.show')->with('booking', $booking);
     }
 }

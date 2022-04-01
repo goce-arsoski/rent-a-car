@@ -24,9 +24,12 @@ Route::middleware(['auth'])->group(function () {
     //Cars
     Route::resource('/cars', CarsController::class);
     Route::get('/cars', [CarsController::class, 'index'])->name('index.cars');
+    Route::post('/delete-car', [CarsController::class, 'destroy'])->name('delete.car');
 
     //Bookings
-    Route::get('/bookings', [BookingsController::class, 'index']);
+    Route::resource('/bookings', BookingsController::class);
+    Route::get('/bookings', [BookingsController::class, 'index'])->name('bookings');
+    Route::get('/bookings/{id}', [BookingsController::class, 'showOneBooking'])->name('sbooking');
 
     //Bookings custom routes
     Route::get('/cars/{car_id}/bookings', [BookingsController::class, 'allCarBookings'])->name('show.bookings');

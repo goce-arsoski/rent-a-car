@@ -13,7 +13,7 @@ class Car extends Model
 
     protected $primaryKey = 'id';
 
-    protected $fillable = ['user_id', 'brand', 'model', 'plate', 'color'];
+    protected $fillable = ['brand', 'model', 'plate', 'color', 'image_path'];
 
     protected $hidden = ['updated_at'];
 

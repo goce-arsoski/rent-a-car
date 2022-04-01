@@ -26,8 +26,9 @@ class ValidationCarRequest extends FormRequest
         return [
             'brand' => 'required',
             'model' => 'required',
-            'plate' => 'required|unique:cars',
-            'color' => 'required'
+            'plate' => 'required',
+            'color' => 'required',
+            'image' => 'mimes:jpg,png,jpeg'
         ];
     }
 }

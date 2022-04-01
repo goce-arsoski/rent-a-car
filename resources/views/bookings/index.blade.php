@@ -1,7 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="text-center">
+<style>
+  .container-bg {
+    background: #5bb4ca;
+    opacity: 0.8;
+}
+</style>
+  <div class="container-bg text-center col-4 offset-4">
     <h1>
       Bookings:
     </h1>
@@ -10,19 +16,23 @@
     <ul>
       @forelse ($bookings as $booking)
         <li>
-          <button class="btn btn-info">
-            <a href="{{ route('show.bookings', [$booking->car->id, $booking->id]) }}">
-              View booking
-            </a>
-          </button>
-          From: {{ $booking['start_date'] }} to {{ $booking['end_date'] }}.
+          <a href="{{ route('show.bookings', $booking->car->id) }}">
+            View all bookings for
+            <b> {{ $booking->car->brand }} {{ $booking->car->model }} </b>
+          </a>
+          ---
+          <a href="{{ route('sbooking', $booking->id) }}">
+            From: {{ $booking['start_date'] }} to {{ $booking['end_date'] }}.
+          </a>
         </li>
       @empty
         <p>
           No bookings yet.
         </p>
       @endforelse
-      {{ $bookings->links() }}
     </ul>
+    <div>
+      {{ $bookings->links() }}
+    </div>
   </div>
 @endsection

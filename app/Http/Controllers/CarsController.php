@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ValidationCarRequest;
+use Illuminate\Http\Request;
 use App\Models\Car;
 use App\Models\User;
 
@@ -13,7 +14,7 @@ class CarsController extends Controller
         $cars = Car::all();
 
         return view('cars.index', [
-            'cars' => $cars
+            'cars' => Car::paginate(3)
         ]);
     }
 
@@ -27,11 +28,19 @@ class CarsController extends Controller
     {
         $request->validated();
 
+        if ($request->image != null) {
+            $imageName = $request->brand . '_' . $request->model . '_' . time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+        } else {
+            $imageName = "image_path";
+        }
+
         $car = Car::create([
             'brand' => $request->input('brand'),
             'model' => $request->input('model'),
             'plate' => $request->input('plate'),
-            'color' => $request->input('color')
+            'color' => $request->input('color'),
+            'image_path' => $imageName
         ]);
 
         return redirect('/cars');
@@ -51,26 +60,44 @@ class CarsController extends Controller
         return view('cars.edit')->with('car', $car);
     }
 
-    public function update(ValidationCarRequest $request, $id)
+    public function update(ValidationCarRequest $request)
     {
         $request->validated();
 
-        $car = Car::where('id', $id)
+        if ($request->image != null) {
+            $imageName = $request->brand . '_' . $request->model . '_' . time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+        } else {
+            $imageName = $request->image_path;
+        }
+
+        $car = Car::where('id', $request->car_id)
             ->update([
                 'brand' => $request->input('brand'),
                 'model' => $request->input('model'),
                 'plate' => $request->input('plate'),
-                'color' => $request->input('color')
+                'color' => $request->input('color'),
+                'image_path' => $imageName
             ]);
 
         return redirect('/cars');
     }
 
-    public function destroy(Car $car)
+    public function destroy(Request $request)
     {
+        $car_id = $request->car_id;
+        $car = Car::findOrFail($car_id);
+        $car_brand = $car->brand;
+        $car_model = $car->model;
         $car->delete();
 
-        return redirect('/cars');
+        if ($request->type == "form") {
+            return redirect('/cars')->with('message', "The car $car_brand $car_model is deleted!");
+        }
+        return response()->json([
+            'redirect' => route('index.cars'),
+            'success' => "program"
+        ]);
     }
 
     public function userCars()

@@ -8,26 +8,31 @@
   </div>
 
   <div class="text-center">
-    @if($errors->any())
+    {{-- @if($errors->any())
     <h4>{{$errors->first()}}</h4>
-    @endif
-
-    <form action="{{ route('store.booking', $car->id) }}" method="POST">
+    @endif --}}
+    <form action="{{ route('bookings.update', $booking->id) }}" method="POST">
       @csrf
+      @method('PUT')
       <div class="container">
         <div class="row text-center col-2 offset-5">
           <input
-          type="hidden"
-          name="car_id"
-          value="{{ $car->id}}">
+            type="hidden"
+            name="booking_id"
+            value="{{ $booking->id}}">
+          <input
+            type="hidden"
+            name="car_id"
+            value="{{ $booking->car->id }}">
           <div class="col-sm">
             <label class="control-label">
               Start date
             </label>
-            <input
-              type="date"
-              class="form-control block mb-2"
-              name="start_date">
+          <input
+            type="date"
+            class="form-control block mb-2"
+            name="start_date"
+            value="{{ $booking->start_date }}">
           </div>
           <div class="col-sm">
             <label class="control-label">
@@ -36,14 +41,13 @@
             <input
               type="date"
               class="form-control block mb-3"
-              name="end_date">
+              name="end_date"
+              value="{{ $booking->end_date }}">
           </div>
           </br>
-          <div class="col-sm">
-            <button type="submit" class="btn btn-primary block">
-              Book
-            </button>
-          </div>
+          <button type="submit" class="btn btn-primary block">
+            Update booking
+          </button>
         </div>
       </div>
     </form>

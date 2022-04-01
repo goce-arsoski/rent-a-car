@@ -1,21 +1,31 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+  .card {
+    background: #5bb4ca;
+    opacity: 0.8;
+}
+</style>
   <div class="text-center">
-    <ul>
-      <p>
-        Bookings:
-      </p>
-
-      @forelse ($car->carBookings as $booking)
-        <li>
-          From: {{ $booking['start_date'] }} to {{ $booking['end_date'] }}.
-        </li>
-      @empty
-        <p>
-          No bookings yet.
-        </p>
-      @endforelse
-    </ul>
+    <form action="/bookings/{{ $booking->id }}" method="POST">
+      @csrf
+      @method('PUT')
+      <div class="card col-4 offset-4">
+        From: {{ $booking['start_date'] }} to {{ $booking['end_date'] }}.
+        <div class="col-4 offset-4 btn-group mb-2" role="group" aria-label="Basic mixed styles example">
+          <a href="{{ route('bookings.edit', $booking->id) }}" type="button" class="btn btn-warning">
+            Edit
+          </a>
+          <form action="/bookings/{$id}" method="POST" class="ml-2">
+            @csrf
+          @method('delete')
+          <a type="button" class="btn btn-danger">
+            Delete
+          </a>
+          </form>
+        </div>
+      </div>
+    </form>
   </div>
 @endsection
