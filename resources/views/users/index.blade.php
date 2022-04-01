@@ -3,22 +3,23 @@
 @section('content')
 <style>
   .container-bg {
-    background: #ff8080;
-    opacity: 0.8;
+    background: #e9e0e0;
+    opacity: 0.95;
 }
 </style>
-<main class="container-bg col-6 offset-3">
+<main class="container-bg col-4 offset-4">
   <div class="container p-5">
+    <h1 class="text-center">
+      My Bookings
+    </h1>
     <ul>
       <p>
-        <h1><b>Users:</b></h1>
+        <h3><b>User:</b>
+          <a href="{{ route('users.show', $user->id) }}">
+            {{  $user->name  }}
+          </a>
+        </h3>
       </p>
-
-      @foreach ($users as $user)
-        <li>
-          <h4> {{ $user['name'] }} </h4>
-        </li>
-      @endforeach
     </ul>
     </br>
     <ul>
@@ -29,14 +30,9 @@
       @forelse ($user->userBookings as $bookings)
       <li>
         <h6>
-          {{ $user['name'] }}
-
-          <?php
-            $id = $bookings['car_id'];
-            $car = DB::table('cars')->find($id);
-            echo "--- $car->brand $car->model: --- ";
-          ?>
-          From: {{ $bookings['start_date'] }} to {{ $bookings['end_date'] }}.
+          <a href="{{ route('sbooking', $bookings->id) }}">
+            {{ $bookings->car->car_model() }} from: {{ $bookings['start_date'] }} to {{ $bookings['end_date'] }}.
+          </a>
         </h6>
       </li>
     @empty

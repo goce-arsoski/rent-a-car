@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ValidationBookingRequest;
-use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Models\Car;
 use App\Services\BookingService;
@@ -101,14 +100,12 @@ class BookingsController extends Controller
     public function allCarBookings($car_id)
     {
         $car = Car::find($car_id);
-        // $bookings = Booking::find($car_id, $booking_id);
         $bookings = $car->carBookings;
         return view('bookings.showCarBookings')->with(['car' => $car, 'bookings' => $bookings]);
     }
 
     public function showOneBooking($id)
     {
-        // dd($id);
         $booking = Booking::find($id);
         return view('bookings.show')->with('booking', $booking);
     }

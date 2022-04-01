@@ -3,8 +3,8 @@
 @section('content')
 <style>
   .container-bg {
-    background: #5bb4ca;
-    opacity: 0.8;
+    background: #e9e0e0;
+    opacity: 0.95;
 }
 </style>
   <div class="container-bg text-center col-4 offset-4">

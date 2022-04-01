@@ -1,7 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="text-center">
+<style>
+  .container-bg {
+    background: #e9e0e0;
+    opacity: 0.95;
+}
+</style>
+<div class="container-bg text-center">
   @if(session()->has('message'))
     <div class="col-4 offset-4 alert alert-success">
       {{ session()->get('message') }}
@@ -21,6 +27,7 @@
       <div class="card mb-4" style="width: 20rem;">
         <div class="text-center">
           <img
+          class="mt-2"
           src="{{ asset('images/' . $car->image_path) }}"
           height="140">
         </div>
@@ -57,9 +64,8 @@
   @endforeach
 
   </div>
-  </br>
-  <div>
-    {{ $cars->links() }}
+  <div class="container">
+      {{ $cars->links() }}
   </div>
 </div>
 @endsection

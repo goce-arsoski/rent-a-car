@@ -3,13 +3,14 @@
 @section('content')
 <style>
   .container-bg {
-    background: #68d635;
-    opacity: 0.8;
+    background: #e9e0e0;
+    opacity: 0.95;
 }
 </style>
-
-  <div class="text-center">
+<div class="container col-4 offset-4 text-center">
+  <div class="container-bg text-center">
     <img
+      class="mt-2"
       src="{{ asset('images/' . $car->image_path) }}"
       width="400">
     <h1>
@@ -49,7 +50,7 @@
             value="{{ $car->id}}">
         </div>
 
-        <div class="container-bg col-2 offset-5"
+        <div class="container-bg"
           <p>
             <b>Bookings:</b>
           </p>
@@ -71,30 +72,31 @@
       </div>
     </form>
   </div>
+</div>
 @endsection
 
 @section('js')
-  <script>
-      $('.delete').on('click', function(){
-        // console.log(jQuery(this).data('goce'))
-        let car_id = $(this).data('car_id')
-        let token = $('input[name=_token]').val()
-        console.log(token)
-        $.ajaxSetup({
-          headers: {
-            'X-CSRF-TOKEN': token
-          }
-        })
-        $.ajax({
-            url: "{{ route('delete.car') }}",
-            type: 'POST',
-            data: {
-                "car_id": car_id,
-            },
-            success: function (data){
-              window.location.href = data.redirect;
-            }
-        });
+<script>
+    $('.delete').on('click', function(){
+      // console.log(jQuery(this).data('goce'))
+      let car_id = $(this).data('car_id')
+      let token = $('input[name=_token]').val()
+      console.log(token)
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': token
+        }
       })
-  </script>
+      $.ajax({
+          url: "{{ route('delete.car') }}",
+          type: 'POST',
+          data: {
+              "car_id": car_id,
+          },
+          success: function (data){
+            window.location.href = data.redirect;
+          }
+      });
+    })
+</script>
 @endsection

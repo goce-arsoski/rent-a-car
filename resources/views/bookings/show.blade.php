@@ -3,8 +3,8 @@
 @section('content')
 <style>
   .card {
-    background: #5bb4ca;
-    opacity: 0.8;
+    background: #e9e0e0;
+    opacity: 0.95;
 }
 </style>
   <div class="text-center">

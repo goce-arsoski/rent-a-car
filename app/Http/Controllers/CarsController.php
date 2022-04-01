@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ValidationCarRequest;
 use Illuminate\Http\Request;
 use App\Models\Car;
-use App\Models\User;
 
 class CarsController extends Controller
 {
@@ -97,15 +96,6 @@ class CarsController extends Controller
         return response()->json([
             'redirect' => route('index.cars'),
             'success' => "program"
-        ]);
-    }
-
-    public function userCars()
-    {
-        $users = User::all();
-
-        return view('users.index', [
-            'users' => $users
         ]);
     }
 }

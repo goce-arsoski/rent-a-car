@@ -29,4 +29,9 @@ class Car extends Model
     {
         return $this->hasManyThrough(Booking::class, User::class);
     }
+
+    public function car_model()
+    {
+        return $this->brand . ' ' . $this->model;
+    }
 }

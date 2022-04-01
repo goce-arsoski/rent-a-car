@@ -14,7 +14,7 @@
     <form action="{{ route('cars.update', $car->id) }}" method="POST" enctype="multipart/form-data">
       @csrf
       @method('PUT')
-      <div class="block">
+      <div class="block row text-center col-2 offset-5">
         <input
           type="hidden"
           name="car_id"
@@ -22,25 +22,25 @@
         </br>
         <input
           type="text"
-          class="block"
+          class="form-control block mb-2"
           name="brand"
           value="{{ $car->brand }}">
         </br>
         <input
           type="text"
-          class="block"
+          class="form-control block mb-2"
           name="model"
           value="{{ $car->model }}">
         </br>
         <input
           type="text"
-          class="block"
+          class="form-control block mb-2"
           name="plate"
           value="{{ $car->plate }}">
         </br>
         <input
           type="text"
-          class="block"
+          class="form-control block mb-2"
           name="color"
           value="{{ $car->color }}">
         </br>
@@ -52,6 +52,7 @@
           type="hidden"
           name="image_path"
           value="{{ $car->image_path}}">
+        </br>
         </br>
         <button type="submit" class="btn btn-primary block">
           Update car

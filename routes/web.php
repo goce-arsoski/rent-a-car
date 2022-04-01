@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarsController;
 use App\Http\Controllers\BookingsController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -20,6 +21,8 @@ Route::get('/', function () {
     return view('home');
 });
 
+Auth::routes();
+
 Route::middleware(['auth'])->group(function () {
     //Cars
     Route::resource('/cars', CarsController::class);
@@ -33,18 +36,16 @@ Route::middleware(['auth'])->group(function () {
 
     //Bookings custom routes
     Route::get('/cars/{car_id}/bookings', [BookingsController::class, 'allCarBookings'])->name('show.bookings');
-
-    //Route::get('/cars/{id}/bookings/create', [CarsController::class, 'cBooking'])->name('create.booking');
-    //Route::post('/cars/{id}/bookings', [CarsController::class, 'sBooking'])->name('store.booking');
     Route::controller(BookingsController::class)->group(function () {
         Route::get('/cars/{id}/bookings/create', 'cBooking')->name('create.booking');
         Route::post('/cars/{id}/bookings', 'sBooking')->name('store.booking');
     });
 
     //Users
-    Route::get('/users', [CarsController::class, 'userCars'])->name('user.cars');
+    Route::get('/mybookings', [UsersController::class, 'userCars'])->name('user.cars');
+    Route::get('/users/{id}', [UsersController::class, 'show'])->name('users.show');
+    Route::get('/users/{id}/edit', [UsersController::class, 'edit'])->name('edit.user');
+    Route::put('/users/{id}', [UsersController::class, 'update'])->name('users.update');
 });
-
-Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
