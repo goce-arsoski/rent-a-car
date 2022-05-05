@@ -27,6 +27,7 @@ Route::middleware(['auth'])->group(function () {
     //Cars
     Route::resource('/cars', CarsController::class);
     Route::get('/cars', [CarsController::class, 'index'])->name('index.cars');
+    Route::get('/fetch-cars', [CarsController::class, 'fetchcar'])->name('fetchcar');
     Route::post('/delete-car', [CarsController::class, 'destroy'])->name('delete.car');
 
     //Bookings

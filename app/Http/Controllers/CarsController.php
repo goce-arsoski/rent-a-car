@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ValidationCarRequest;
-use Illuminate\Http\Request;
 use App\Models\Car;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\ValidationCarRequest;
 
 class CarsController extends Controller
 {
@@ -17,15 +18,30 @@ class CarsController extends Controller
         ]);
     }
 
+    public function fetchcar()
+    {
+        $cars = Car::all();
+
+        return response()->json([
+            'cars' => $cars,
+        ]);
+    }
+
     public function create()
     {
 
         return view('cars.create');
     }
 
-    public function store(ValidationCarRequest $request)
+    public function store(Request $request)
     {
-        $request->validated();
+        $validator = Validator::make($request->all(), [
+            'brand' => 'required',
+            'model' => 'required',
+            'plate' => 'required',
+            'color' => 'required',
+            'image' => 'mimes:jpg,png,jpeg',
+        ]);
 
         if ($request->image != null) {
             $imageName = $request->brand . '_' . $request->model . '_' . time() . '.' . $request->image->extension();
@@ -34,15 +50,44 @@ class CarsController extends Controller
             $imageName = "image_path";
         }
 
-        $car = Car::create([
-            'brand' => $request->input('brand'),
-            'model' => $request->input('model'),
-            'plate' => $request->input('plate'),
-            'color' => $request->input('color'),
-            'image_path' => $imageName
-        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'errors' => $validator->errors()->getMessages(),
+            ]);
+        } else {
+            $car = new Car;
+            $car->brand = $request->input('brand');
+            $car->model = $request->input('model');
+            $car->plate = $request->input('plate');
+            $car->color = $request->input('color');
+            $car->image_path = $imageName;
+            $car->save();
+            return response()->json([
+                'status' => 200,
+                'errors' => 'Car Added Successfully',
+                'redirect' => route('index.cars')
+            ]);
+        }
 
-        return redirect('/cars');
+        // $request->validated();
+
+        // if ($request->image != null) {
+        //     $imageName = $request->brand . '_' . $request->model . '_' . time() . '.' . $request->image->extension();
+        //     $request->image->move(public_path('images'), $imageName);
+        // } else {
+        //     $imageName = "image_path";
+        // }
+
+        // $car = Car::create([
+        //     'brand' => $request->input('brand'),
+        //     'model' => $request->input('model'),
+        //     'plate' => $request->input('plate'),
+        //     'color' => $request->input('color'),
+        //     'image_path' => $imageName
+        // ]);
+
+        // return redirect('/cars');
     }
 
     public function show($id)
